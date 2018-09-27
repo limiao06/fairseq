@@ -525,7 +525,7 @@ def lstm_luong_wmt_en_de(args):
 
 
 @register_model_architecture('lstm', 'lstm_comments_generation_test')
-def base_architecture(args):
+def lstm_comments_generation_test(args):
     args.dropout = getattr(args, 'dropout', 0.1)
     args.encoder_embed_dim = getattr(args, 'encoder_embed_dim', 300)
     args.encoder_embed_path = getattr(args, 'encoder_embed_path', None)
