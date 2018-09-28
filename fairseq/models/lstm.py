@@ -528,14 +528,14 @@ def lstm_luong_wmt_en_de(args):
 def lstm_comments_generation_test(args):
     args.dropout = getattr(args, 'dropout', 0.1)
     args.encoder_embed_dim = getattr(args, 'encoder_embed_dim', 300)
-    args.encoder_embed_path = getattr(args, 'encoder_embed_path', None)
+    args.encoder_embed_path = getattr(args, 'encoder_embed_path', '/home/tx/Project/sentiment_analysis/model/fT_word2vecs/weibo_text_v5.skipgram.300.vec')
     args.encoder_hidden_size = getattr(args, 'encoder_hidden_size', 512)
     args.encoder_layers = getattr(args, 'encoder_layers', 1)
     args.encoder_bidirectional = getattr(args, 'encoder_bidirectional', True)
     args.encoder_dropout_in = getattr(args, 'encoder_dropout_in', args.dropout)
     args.encoder_dropout_out = getattr(args, 'encoder_dropout_out', args.dropout)
     args.decoder_embed_dim = getattr(args, 'decoder_embed_dim', args.encoder_embed_dim)
-    args.decoder_embed_path = getattr(args, 'decoder_embed_path', None)
+    args.decoder_embed_path = getattr(args, 'decoder_embed_path', '/home/tx/Project/sentiment_analysis/model/fT_word2vecs/weibo_text_v5.skipgram.300.vec')
     args.decoder_hidden_size = getattr(args, 'decoder_hidden_size',
         args.encoder_hidden_size*2 if args.encoder_bidirectional else args.encoder_hidden_size)
     args.decoder_layers = getattr(args, 'decoder_layers', 1)
