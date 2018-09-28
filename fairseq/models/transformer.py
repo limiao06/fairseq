@@ -888,4 +888,5 @@ def transformer_comments_generation_test(args):
     args.decoder_normalize_before = getattr(args, 'decoder_normalize_before', True)
     args.attention_dropout = getattr(args, 'attention_dropout', 0.1)
     args.relu_dropout = getattr(args, 'relu_dropout', 0.1)
-    transformer_vaswani_wmt_en_de_big(args)
+    args.dropout = getattr(args, 'dropout', 0.1)
+    base_architecture(args)
