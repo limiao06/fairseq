@@ -88,6 +88,7 @@ class LiDiverseBeamSearch(Search):
 
     def __init__(self, tgt_dict, gamma=1.0):
         super().__init__(tgt_dict)
+        self.gamma = gamma
 
     def step(self, step, lprobs, scores):
         super()._init_buffers(lprobs)
@@ -103,7 +104,7 @@ class LiDiverseBeamSearch(Search):
 
         # start diverse beam search
         sorted_lprobs, sorted_index = torch.sort(lprobs,descending=True)
-        penalty = -gamma * torch.arange(vocab_size, dtype=lprobs.dtype, device=lprobs.device)
+        penalty = -self.gamma * torch.arange(vocab_size, dtype=lprobs.dtype, device=lprobs.device)
         sorted_lprobs.add_(penalty.view(1,1,-1))
         lprobs = torch.gather(sorted_lprobs, -1, sorted_index)
         # end here
