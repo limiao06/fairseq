@@ -103,19 +103,20 @@ class LiDiverseBeamSearch(Search):
             lprobs.add_(scores[:, :, step - 1].unsqueeze(-1))
 
         # start diverse beam search
-        sorted_lprobs, sorted_index = torch.sort(lprobs,descending=True)
+        sorted_lprobs, sorted_index = torch.sort(lprobs, dim=-1, descending=True)
+        _, reverse_index = sorted_index.sort(dim=-1)
         penalty = -self.gamma * torch.arange(vocab_size, dtype=lprobs.dtype, device=lprobs.device)
         sorted_lprobs.add_(penalty.view(1,1,-1))
-        lprobs = torch.gather(sorted_lprobs, -1, sorted_index)
+        modified_lprobs = torch.gather(sorted_lprobs, dim=-1, index=reverse_index)
         # end here
 
         torch.topk(
-            lprobs.view(bsz, -1),
+            modified_lprobs.view(bsz, -1),
             k=min(
                 # Take the best 2 x beam_size predictions. We'll choose the first
                 # beam_size of these which don't predict eos to continue with.
                 beam_size * 2,
-                lprobs.view(bsz, -1).size(1) - 1,  # -1 so we never select pad
+                modified_lprobs.view(bsz, -1).size(1) - 1,  # -1 so we never select pad
             ),
             out=(self.scores_buf, self.indices_buf),
         )
